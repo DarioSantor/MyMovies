@@ -5,7 +5,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.example.mymoviesapp.data.MoviesAdapter
@@ -22,23 +21,24 @@ class ListFragment : Fragment() {
     private var adapter: MoviesAdapter? = null
     private lateinit var viewModel: ItemViewModel
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel = ViewModelProvider(requireActivity()).get(ItemViewModel::class.java)
+        viewModel = ViewModelProvider(requireActivity())[ItemViewModel::class.java]
 
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentListBinding.inflate(inflater, container, false)
-
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         viewModel.getData()
         adapter = MoviesAdapter(requireContext()) {
             viewModel.movie = it
